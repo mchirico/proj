@@ -2,8 +2,12 @@ package process
 
 import (
 	"errors"
+	"fmt"
 	"github.com/mchirico/proj/fileStrings"
 	"github.com/mchirico/proj/pkg"
+	"os"
+	"os/exec"
+	"path/filepath"
 )
 
 func CreateProject(args []string) error {
@@ -28,9 +32,37 @@ func CreateProject(args []string) error {
 
 		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/Notes", fileStrings.Notes, 0600)
 		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/README.md", fileStrings.Readme(), 0600)
+		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/.gitignore", fileStrings.GitIgnore, 0600)
+
 		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/start.sh", fileStrings.StartSh, 0700)
 
 	}
 
 	return nil
+}
+
+// Not implemented
+func InstallGoPackages(proj string) {
+
+	absPath, _ := filepath.Abs(proj)
+
+	gopath := fmt.Sprintf("GOPATH=%s", absPath)
+	path := fmt.Sprintf("PATH=\"%s/bin:$PATH\"", absPath)
+	gobin := fmt.Sprintf("GOBIN=\"%s/bin\"", absPath)
+
+	cmd := exec.Command("/bin/bash", ".", "junkTest/setpath")
+	cmd.Env = append(os.Environ(),
+		gopath,
+		path,
+		gobin,
+	)
+
+	output, err := cmd.Output()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	fmt.Println(string(output)) // write the output with ResponseWriter
+
 }

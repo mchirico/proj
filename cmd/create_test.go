@@ -9,7 +9,10 @@ import (
 
 func TestCreateFile(t *testing.T) {
 	proj := []string{"junkTest"}
-	process.CreateProject(proj)
+
+	cp := process.Cp{}
+
+	cp.CreateProject(proj)
 
 	data, _ := fileStrings.GetPath("./junkTest/setpath")
 	t.Logf("%s\n", data)
