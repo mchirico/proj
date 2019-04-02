@@ -29,7 +29,7 @@ import (
 // projCmd represents the proj command
 var projCmd = &cobra.Command{
 	Use:   "proj",
-	Short: "Creates a go project",
+	Short: "Creates a go project.  v1.0",
 	Long: `
 
 
