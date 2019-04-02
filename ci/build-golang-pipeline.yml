@@ -1,0 +1,44 @@
+
+resources:
+
+- name: proj
+  type: git
+  source:
+    uri: https://github.com/mchirico/proj.git
+    branch: master
+
+###############################################################################
+
+jobs:
+
+- name: unit
+  plan:
+  - get: proj
+    trigger: true
+  - task: unit
+    file: proj/ci/unit-task.yml
+
+- name: build
+  plan:
+  - get: proj
+    trigger: true
+    passed: [unit]
+  - task: build
+    file: proj/ci/build-task.yml
+
+- name: inform
+  plan:
+  - get: proj
+    trigger: true
+    passed: [build]
+  - task: inform
+    file: proj/ci/inform-task.yml
+
+- name: docker
+  plan:
+  - get: proj
+    trigger: true
+    passed: [inform]
+  - task: docker
+    file: proj/ci/docker-task.yml
+

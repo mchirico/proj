@@ -2,12 +2,16 @@ package cmd
 
 import (
 	"github.com/mchirico/proj/fileStrings"
-	"github.com/mchirico/proj/pkg"
 	"github.com/mchirico/proj/process"
+	"github.com/mchirico/proj/tlib"
+	"strings"
 	"testing"
 )
 
 func TestCreateFile(t *testing.T) {
+
+	defer tlib.ConstructDir()()
+
 	proj := []string{"junkTest"}
 
 	cp := process.Cp{}
@@ -15,8 +19,11 @@ func TestCreateFile(t *testing.T) {
 	cp.CreateProject(proj)
 
 	data, _ := fileStrings.GetPath("./junkTest/setpath")
-	t.Logf("%s\n", data)
+	match := strings.Contains(string(data), "git clone git@github.")
+	if !match {
+		t.Fatalf("No data...")
+	}
 
-	pkg.RmDir(proj[0])
+	tlib.Rmdir(proj[0])
 
 }

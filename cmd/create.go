@@ -21,25 +21,34 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/mchirico/proj/process"
+
 	"github.com/spf13/cobra"
 )
 
 // createCmd represents the create command
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "This will create a project",
+	Short: "Create a project",
 	Long: `
-Add long stuff...
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		cp := process.Cp{}
 		cp.CreateProject(args)
+		if len(args) == 1 {
+			fmt.Printf(`Project created
+
+cd %s
+./recreateWithCobra.sh
+
+`, args[0])
+		}
 	},
 }
 
 func init() {
-	projCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(createCmd)
 
 	// Here you will define your flags and configuration settings.
 

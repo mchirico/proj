@@ -21,6 +21,7 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/mchirico/proj/process"
 	"github.com/spf13/cobra"
 )
@@ -28,19 +29,20 @@ import (
 // emptyCmd represents the empty command
 var emptyCmd = &cobra.Command{
 	Use:   "empty",
-	Short: "Force empty for cobra",
-	Long: `
-`,
+	Short: "Create an empty shell project",
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		cp := process.Cp{}
 		cp.Force = true
 		cp.Empty = true
 		cp.CreateProject(args)
+		fmt.Println("Done!")
 	},
 }
 
 func init() {
-	projCmd.AddCommand(emptyCmd)
+	rootCmd.AddCommand(emptyCmd)
 
 	// Here you will define your flags and configuration settings.
 

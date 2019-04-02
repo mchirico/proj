@@ -21,24 +21,27 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/mchirico/proj/process"
+
 	"github.com/spf13/cobra"
 )
 
 // forceCmd represents the force command
 var forceCmd = &cobra.Command{
 	Use:   "force",
-	Short: "Force recreate files",
-	Long:  ``,
+	Short: "Force or recreate files",
+	Long: `This will overwrite existing files.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cp := process.Cp{}
 		cp.Force = true
 		cp.CreateProject(args)
+		fmt.Println("force done")
 	},
 }
 
 func init() {
-	projCmd.AddCommand(forceCmd)
+	rootCmd.AddCommand(forceCmd)
 
 	// Here you will define your flags and configuration settings.
 

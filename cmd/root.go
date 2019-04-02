@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -35,7 +35,12 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "myproj",
 	Short: "root",
-	Long: `
+	Long: `  
+Basic usage:
+
+proj create bozo
+cd bozo
+./recreateWithCobra.sh
 
 `,
 	// Uncomment the following line if your bare application

@@ -8,18 +8,38 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 type Cp struct {
-	Force bool
-	Empty bool
+	Force   bool
+	Empty   bool
+	baseDir string
+	projDir string
 }
 
+func (cp *Cp) Analyze(dir string) error {
+	path, _ := filepath.Abs(".")
+	list := strings.Split(path, "/")
+
+	cp.baseDir = dir
+	cp.projDir = dir
+
+	if list[len(list)-1] == dir {
+		cp.baseDir = "."
+	}
+
+	if dir == "." {
+		return errors.New("Can't work with .")
+	}
+
+	return nil
+}
 
 func (cp *Cp) CreateProject(args []string) error {
 
 	if len(args) == 1 {
-
+		cp.Analyze(args[0])
 		_, err := pkg.StatDir(args[0])
 		if err == nil {
 			if cp.Force != true {
@@ -27,27 +47,41 @@ func (cp *Cp) CreateProject(args []string) error {
 			}
 		}
 
-		pkg.CreateDir(args[0])
+		if cp.baseDir != "." {
+			pkg.CreateDir(cp.baseDir)
+		}
 
-		pkg.Write(args[0]+"/setpath", fileStrings.Setpath, 0700)
+		pkg.Write(cp.baseDir+"/setpath", fileStrings.Setpath, 0700)
+		pkg.Write(cp.baseDir+"/recreateWithCobra.sh", fileStrings.RecreateCobra(cp.projDir), 0700)
 
-		pkg.CreateDir(args[0] + "/src")
-		pkg.CreateDir(args[0] + "/src/github.com")
+		pkg.CreateDir(cp.baseDir + "/src")
+		pkg.CreateDir(cp.baseDir + "/src/github.com")
 
 		if cp.Empty == true {
 			return nil
 		}
 
-		pkg.CreateDir(args[0] + "/src/github.com/mchirico")
-		pkg.CreateDir(args[0] + "/src/github.com/mchirico/" + args[0])
+		pkg.CreateDir(cp.baseDir + "/src/github.com/mchirico")
+		pkg.CreateDir(cp.baseDir + "/src/github.com/mchirico/" + cp.projDir)
 
-		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/.travis.yml", fileStrings.Travis, 0600)
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/.travis.yml",
+			fileStrings.Travis, 0644)
 
-		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/Notes", fileStrings.Notes, 0600)
-		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/README.md", fileStrings.Readme(), 0600)
-		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/.gitignore", fileStrings.GitIgnore, 0600)
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/Notes",
+			fileStrings.Notes(cp.projDir), 0644)
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/README.md",
+			fileStrings.Readme(cp.projDir), 0644)
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/.gitignore",
+			fileStrings.GitIgnore, 0600)
 
-		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/start.sh", fileStrings.StartSh, 0700)
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/start.sh",
+			fileStrings.StartSh, 0700)
+
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/azure-pipelines.docker.yml",
+			fileStrings.AzurePipeline(cp.projDir), 0644)
+
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/Dockerfile",
+			fileStrings.AzureDocker(cp.projDir), 0644)
 
 	}
 
