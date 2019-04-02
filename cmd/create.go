@@ -21,8 +21,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/mchirico/proj/process"
 	"github.com/spf13/cobra"
 )
@@ -35,9 +33,7 @@ var createCmd = &cobra.Command{
 Add long stuff...
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("create called")
 		process.CreateProject(args)
-		fmt.Println("Good!")
 	},
 }
 
