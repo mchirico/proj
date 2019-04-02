@@ -28,14 +28,44 @@ import (
 
 // projCmd represents the proj command
 var projCmd = &cobra.Command{
-	Use:   "proj",
-	Short: "Creates a go project. Example:  proj proj create bozo",
+	Use: "proj",
+	Short: `Creates a go project. Example:  proj proj create bozo
+
+                    For more detail, just type: 
+
+                         proj proj 
+`,
 	Long: `
 
 
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("proj called")
+		fmt.Println(`
+Possible commands:
+
+Create a default project:
+
+    proj proj create bozo
+
+
+Force recreate of files
+
+    proj proj force bozo
+
+
+Create empty project for using cobra
+
+
+    proj proj empty bozo
+
+    cd bozo  # Follow directions in setpath
+
+
+
+
+
+
+`)
 	},
 }
 
