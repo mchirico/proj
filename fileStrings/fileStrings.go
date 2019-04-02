@@ -130,6 +130,19 @@ matrix:
 
 `)
 
+var StartSh = []byte(`#!/bin/bash
+
+# These are common packages
+
+go get github.com/axw/gocov/gocov
+go install github.com/axw/gocov/gocov
+go get -u github.com/mchirico/date/parse
+go get gopkg.in/yaml.v2
+
+
+
+`)
+
 func Readme() []byte {
 	return []byte(strings.Replace(string(readme), "{rep}", "```", -1))
 }

@@ -28,6 +28,7 @@ func CreateProject(args []string) error {
 
 		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/Notes", fileStrings.Notes, 0600)
 		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/README.md", fileStrings.Readme(), 0600)
+		pkg.Write(args[0]+"/src/github.com/mchirico/"+args[0]+"/start.sh", fileStrings.StartSh, 0700)
 
 	}
 
