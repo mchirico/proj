@@ -25,29 +25,30 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// createCmd represents the create command
-var createCmd = &cobra.Command{
-	Use:   "create",
-	Short: "This will create a project",
+// emptyCmd represents the empty command
+var emptyCmd = &cobra.Command{
+	Use:   "empty",
+	Short: "Force empty for cobra",
 	Long: `
-Add long stuff...
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		cp := process.Cp{}
+		cp.Force = true
+		cp.Empty = true
 		cp.CreateProject(args)
 	},
 }
 
 func init() {
-	projCmd.AddCommand(createCmd)
+	projCmd.AddCommand(emptyCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// emptyCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// emptyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

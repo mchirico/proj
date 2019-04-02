@@ -10,13 +10,21 @@ import (
 	"path/filepath"
 )
 
-func CreateProject(args []string) error {
+type Cp struct {
+	Force bool
+	Empty bool
+}
+
+
+func (cp *Cp) CreateProject(args []string) error {
 
 	if len(args) == 1 {
 
 		_, err := pkg.StatDir(args[0])
 		if err == nil {
-			return errors.New("Directory Exists... remove first.")
+			if cp.Force != true {
+				return errors.New("Directory Exists... remove first.")
+			}
 		}
 
 		pkg.CreateDir(args[0])
@@ -25,6 +33,11 @@ func CreateProject(args []string) error {
 
 		pkg.CreateDir(args[0] + "/src")
 		pkg.CreateDir(args[0] + "/src/github.com")
+
+		if cp.Empty == true {
+			return nil
+		}
+
 		pkg.CreateDir(args[0] + "/src/github.com/mchirico")
 		pkg.CreateDir(args[0] + "/src/github.com/mchirico/" + args[0])
 
