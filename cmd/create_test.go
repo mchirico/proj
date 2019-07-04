@@ -3,14 +3,14 @@ package cmd
 import (
 	"github.com/mchirico/proj/fileStrings"
 	"github.com/mchirico/proj/process"
-	"github.com/mchirico/proj/tlib"
+	"github.com/mchirico/tlib/util"
 	"strings"
 	"testing"
 )
 
 func TestCreateFile(t *testing.T) {
 
-	defer tlib.ConstructDir()()
+	defer util.NewTlib().ConstructDir()()
 
 	proj := []string{"junkTest"}
 
@@ -24,6 +24,9 @@ func TestCreateFile(t *testing.T) {
 		t.Fatalf("No data...")
 	}
 
-	tlib.Rmdir(proj[0])
+	flist := util.ListFiles(util.PWD())
+	if len(flist) < 15 {
+		t.Fatalf("Did not create files...")
+	}
 
 }
