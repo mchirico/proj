@@ -31,7 +31,7 @@ import (
 var forceCmd = &cobra.Command{
 	Use:   "force",
 	Short: "Force or recreate files",
-	Long: `This will overwrite existing files.`,
+	Long:  `This will overwrite existing files.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cp := process.Cp{}
 		cp.Force = true
