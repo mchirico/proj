@@ -302,6 +302,7 @@ steps:
 
 # Docker
 - script: |
+    set -e
     docker build --no-cache -t $(dockerId)/$(imageName) .
     echo "${DOCKERPASSWORD}"| docker login -u=$(dockerId) --password-stdin
     docker push $(dockerId)/$(imageName)
