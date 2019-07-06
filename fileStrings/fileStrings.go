@@ -26,6 +26,7 @@ var readme = []byte(`
 4. MONGO_CONNECTION_STRING
 5. MONGO_DATABASE 
 6. Make Azure Boards Public
+7. More Cobra commands? (cobra add say)
 
 
 
