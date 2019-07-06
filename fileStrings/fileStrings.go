@@ -10,7 +10,24 @@ var readme = []byte(`
 
 [![Build Status](https://travis-ci.org/mchirico/{proj}.svg?branch=master)](https://travis-ci.org/mchirico/{proj})
 [![codecov](https://codecov.io/gh/mchirico/{proj}/branch/master/graph/badge.svg)](https://codecov.io/gh/mchirico/{proj})
+
+[![Build Status](https://mchirico.visualstudio.com/{proj}/_apis/build/status/mchirico.{proj}?branchName=master)](https://mchirico.visualstudio.com/{proj}/_build/latest?definitionId=9&branchName=master)
+
+
 # {proj}
+
+
+
+### Checklist:
+
+1. dockerPassword
+2. [CodeCov Token](https://codecov.io/gh/mchirico)
+3. No Caps in project
+4. MONGO_CONNECTION_STRING
+5. MONGO_DATABASE 
+6. Make Azure Boards Public
+
+
 
 ## Build with vendor
 {rep}
@@ -76,6 +93,8 @@ git add .travis.yml
 git add .gitignore
 git add LICENSE
 git add README.md
+git add azure-pipelines.docker.yml
+git add Dockerfile
 git commit -m "first commit"
 git remote add origin git@github.com:mchirico/{proj}.git
 git push -u origin master --force
@@ -172,11 +191,7 @@ matrix:
         - go get github.com/axw/gocov/gocov
         - go install github.com/axw/gocov/gocov
         - go get -u github.com/mchirico/date/parse
-        - go get gopkg.in/yaml.v2
-        - go get golang.org/x/crypto/ssh
-        - go get github.com/spf13/cobra
-        - go get github.com/mitchellh/go-homedir
-        - go get github.com/spf13/viper
+        - go get -v -t -d ./...
       before_install:
         #- openssl aes-256-cbc -k "$super_secret_password" -in fixtures/data.enc -out fixtures/data -d
         #- for i in $(ls fixtures/fixtures_*.enc); do openssl aes-256-cbc -k "$super_secret_password" -in ${i} -out ${i%%.*} -d; done
@@ -189,8 +204,8 @@ matrix:
         - gocov test ./... > cc.out
       after_success:
         - cp c.out coverage.txt
-        - bash <(curl -s https://codecov.io/bash)
-        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+        - # bash <(curl -s https://codecov.io/bash)
+        - # "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 
 
 `)
