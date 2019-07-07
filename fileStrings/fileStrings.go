@@ -106,7 +106,7 @@ git push -u origin master --force
 var Setpath = []byte(`#!/bin/bash
 
 # Change Project Here:
-export PROJ=$(basename $(pwd))
+export PROJ=$(basename -- $(pwd))
 
 #
 mkdir -p src/github.com/mchirico
@@ -152,6 +152,7 @@ echo -e "
 
 "
 echo -e "
+cd src/github.com/mchirico/
 git remote add origin https://github.com/mchirico/${PROJ}.git
 git push -u origin master
 "
