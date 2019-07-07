@@ -152,7 +152,7 @@ echo -e "
 
 "
 echo -e "
-cd src/github.com/mchirico/
+
 git remote add origin https://github.com/mchirico/${PROJ}.git
 git push -u origin master
 "
