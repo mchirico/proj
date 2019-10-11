@@ -115,12 +115,6 @@ mkdir -p bin
 export GOPATH=$(pwd)
 export PATH="$(pwd)/bin:$PATH"
 export GOBIN="$(pwd)/bin"
-if ! [ -x "$(command -v godep)" ]; then
-    echo 'Note: godep is not installed.' >&2
-
-
-fi
-
 
 if [ -d "$PWD/src/github.com/mchirico/$PROJ" ]; then
     cd "$PWD/src/github.com/mchirico/$PROJ"
