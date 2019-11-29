@@ -73,7 +73,7 @@ go get github.com/mitchellh/go-homedir
 go get github.com/spf13/viper
 
 rm -rf src/github.com/mchirico/{proj}
-cobra init github.com/mchirico/{proj}
+cobra init --pkg-name github.com/mchirico/{proj}
 
 proj create {proj}
 
@@ -136,7 +136,7 @@ else
        go get github.com/spf13/viper
 
 '
-echo "          cobra init github.com/mchirico/${PROJ}"
+echo "          cobra init --pkg-name github.com/mchirico/${PROJ}"
 echo -e "
 
     . setpath
