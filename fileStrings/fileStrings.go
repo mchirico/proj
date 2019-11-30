@@ -72,11 +72,8 @@ go get github.com/spf13/cobra
 go get github.com/mitchellh/go-homedir
 go get github.com/spf13/viper
 
-rm -rf src/github.com/mchirico/{proj}
+
 cobra init --pkg-name github.com/mchirico/{proj}
-
-proj create {proj}
-
 
 
 cd src/github.com/mchirico/{proj}
@@ -178,7 +175,7 @@ matrix:
   include:
     - language: go
       go:
-        - 1.12.x
+        - 1.13.x
       env:
         - GOMAXPROCS=9
       os:
