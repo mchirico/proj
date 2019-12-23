@@ -72,11 +72,8 @@ go get github.com/spf13/cobra
 go get github.com/mitchellh/go-homedir
 go get github.com/spf13/viper
 
-
-cobra init --pkg-name github.com/mchirico/{proj}
-
-
 cd src/github.com/mchirico/{proj}
+cobra init --pkg-name github.com/mchirico/{proj}
 
 export GO111MODULE=on
 go mod init
@@ -95,7 +92,7 @@ git add azure-pipelines.docker.yml
 git add Dockerfile
 git commit -m "first commit"
 git remote add origin git@github.com:mchirico/{proj}.git
-git push -u origin master --force
+# git push -u origin master --force
 
 
 `)
