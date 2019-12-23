@@ -8,6 +8,12 @@
 
 # proj
 
+```
+# Install
+go get -u github.com/mchirico/proj
+```
+
+
 Create a default project *bozo*:
 
 ```bash

@@ -323,13 +323,12 @@ var azureDocker = []byte(`FROM golang:1.12.6-alpine3.10 AS build
 
 RUN apk add --no-cache git
 
-
-WORKDIR /go/src/project
+WORKDIR $GOPATH/src/github.com/mchirico/{proj}
 
 # Copy the entire project and build it
-# This layer is rebuilt when a file changes in the project directory
-COPY . /go/src/project/
-RUN go get -v -t -d ./...
+
+COPY . $GOPATH/src/github.com/mchirico/{proj}
+RUN go get -v -t -d .
 RUN go build -o /bin/project
 
 # This results in a single layer image
@@ -337,8 +336,23 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=build /bin/project /bin/project
 ENTRYPOINT ["/bin/project"]
+# Args to project
 CMD ["--help"]
 
+`)
+
+var makefile = []byte(`
+docker-build:
+	docker build --no-cache -t gcr.io/mchirico/{proj}:test -f Dockerfile .
+
+push:
+	docker push gcr.io/mchirico/{proj}:test
+
+build:
+	go build -v .
+
+run:
+	docker run --rm -it -p 3000:3000  gcr.io/mchirico/{proj}:test
 `)
 
 func RecreateCobra(proj string) []byte {
@@ -370,4 +384,8 @@ func AzurePipeline(proj string) []byte {
 
 func AzureDocker(proj string) []byte {
 	return []byte(strings.Replace(string(azureDocker), "{proj}", proj, -1))
+}
+
+func Makefile(proj string) []byte {
+	return []byte(strings.Replace(string(makefile), "{proj}", proj, -1))
 }
