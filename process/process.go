@@ -83,6 +83,9 @@ func (cp *Cp) CreateProject(args []string) error {
 		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/Dockerfile",
 			fileStrings.AzureDocker(cp.projDir), 0644)
 
+		pkg.Write(cp.baseDir+"/src/github.com/mchirico/"+cp.projDir+"/Makefile",
+			fileStrings.Makefile(cp.projDir), 0644)
+
 	}
 
 	return nil
