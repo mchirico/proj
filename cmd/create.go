@@ -41,6 +41,7 @@ var createCmd = &cobra.Command{
 
 cd %s
 ./recreateWithCobra.sh
+. setpath
 
 `, args[0])
 		}

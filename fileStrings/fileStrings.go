@@ -319,7 +319,7 @@ steps:
 
 `)
 
-var azureDocker = []byte(`FROM golang:1.12.6-alpine3.10 AS build
+var azureDocker = []byte(`FROM golang:1.13.7-alpine3.11 AS build
 
 RUN apk add --no-cache git
 
