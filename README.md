@@ -1,5 +1,5 @@
 
-
+![Go](https://github.com/mchirico/proj/workflows/Go/badge.svg)
 
 # proj
 
