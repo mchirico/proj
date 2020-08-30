@@ -102,10 +102,10 @@ var Setpath = []byte(`#!/bin/bash
 # Change Project Here:
 export PROJ=$(basename -- $(pwd))
 
-#
 mkdir -p src/github.com/mchirico
 mkdir -p bin
 
+alias gce='gcloud compute ssh --project mchirico'
 export GOPATH=$(pwd)
 export PATH="$(pwd)/bin:$PATH"
 export GOBIN="$(pwd)/bin"
