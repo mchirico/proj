@@ -16,7 +16,7 @@ jobs:
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
-        go-version: ^1.13
+        go-version: ^1.15
       id: go
 
     - name: Check out code into the Go module directory
@@ -35,3 +35,14 @@ jobs:
 
     - name: Test
       run: go test -v .
+
+    - name: Test Race Coverage
+      run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
+
+    - name: Docker build
+      run: docker build --no-cache -t proj:test .
+
+    - name: Docker run
+      run: docker run --rm -it proj:test /bin/bash
+
+
